@@ -1,0 +1,31 @@
+---
+interface Props {
+  html: string;
+}
+
+const { html } = Astro.props;
+
+const head = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
+const body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] ?? html;
+const htmlAttrs = html.match(/<html\s+([^>]*)>/i)?.[1] ?? 'lang="en"';
+const bodyAttrs = html.match(/<body\s*([^>]*)>/i)?.[1] ?? '';
+
+const parseAttrs = (attrs: string) => {
+  const parsed: Record<string, string | boolean> = {};
+  const attrPattern = /([\w:-]+)(?:=(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
+  for (const match of attrs.matchAll(attrPattern)) {
+    parsed[match[1]] = match[2] ?? match[3] ?? match[4] ?? true;
+  }
+  return parsed;
+};
+---
+
+<!doctype html>
+<html {...parseAttrs(htmlAttrs)}>
+  <head>
+    <Fragment set:html={head} />
+  </head>
+  <body {...parseAttrs(bodyAttrs)}>
+    <Fragment set:html={body} />
+  </body>
+</html>

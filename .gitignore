@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.playwright-mcp/
+astro-dev*.log
+loanly-dev*.log
+.tmp-*.html
+
+# Legacy root-level Webflow export copies; Astro uses src/raw and public instead.
+/*.html
+/css/
+/fonts/
+/images/
+/js/
+/templates/
+/videos/
