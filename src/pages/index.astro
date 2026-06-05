@@ -1,6 +1,20 @@
 ---
-import WebflowPage from '../components/WebflowPage.astro';
-import html from '../raw/index.html?raw';
+const destination = '/home';
 ---
 
-<WebflowPage html={html} />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${destination}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={destination} />
+    <title>Redirecting to Green Force</title>
+    <script is:inline>
+      window.location.replace('/home');
+    </script>
+  </head>
+  <body>
+    <p><a href={destination}>Continue to Green Force</a></p>
+  </body>
+</html>
